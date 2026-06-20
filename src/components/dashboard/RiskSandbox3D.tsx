@@ -256,9 +256,15 @@ function disposeScene(scene: TraversableScene) {
   })
 }
 
-async function fetchGeoJSON(path: string) {
-  const response = await fetch(path)
-  if (!response.ok) throw new Error(path + ' 加载失败：' + response.status)
+function publicAssetPath(fileName: string) {
+  const base = import.meta.env.BASE_URL || './'
+  return base.replace(/\/?$/, '/') + fileName.replace(/^\//, '')
+}
+
+async function fetchGeoJSON(fileName: string) {
+  const assetPath = publicAssetPath(fileName)
+  const response = await fetch(assetPath)
+  if (!response.ok) throw new Error(assetPath + ' 加载失败：' + response.status)
   return (await response.json()) as SichuanGeoJSON
 }
 
@@ -276,7 +282,7 @@ export function RiskSandbox3D({ samples, selectedId, onSelect }: RiskSandbox3DPr
   useEffect(() => {
     let ignore = false
 
-    Promise.all([fetchGeoJSON('/sc.json'), fetchGeoJSON('/sc_outline.json')])
+    Promise.all([fetchGeoJSON('sc.json'), fetchGeoJSON('sc_outline.json')])
       .then(([shape, outline]) => {
         if (ignore) return
         setGeojson(shape)
