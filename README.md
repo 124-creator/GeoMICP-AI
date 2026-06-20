@@ -2,6 +2,8 @@
 
 GeoMICP-AI is a public, desensitized demo of a slope flood-damage risk map and MICP low-carbon decision dashboard.
 
+**Live demo:** https://124-creator.github.io/GeoMICP-AI/
+
 It was built from my China Graduate Intelligent Construction Innovation Competition project and is packaged as a recruiter-friendly GitHub demo: React UI, 2D risk map, 3D sandbox, Top-K inspection list, SHAP-style feature explanation, carbon comparison, and single-segment screening.
 
 > Public demo note: this repository does **not** include original competition data, real engineering coordinates, private logs, submission files, or formal design conclusions. The 202 map points are desensitized/synthetic demo samples used to show the engineering workflow.
@@ -84,4 +86,5 @@ This repo is for portfolio demonstration and UI/workflow review only. It should 
 ## License
 
 MIT.
+
 
