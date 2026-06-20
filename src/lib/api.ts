@@ -129,7 +129,16 @@ function demoPost<T, TBody>(url: string, body: TBody): T | undefined {
   return undefined
 }
 
+function shouldUseRemoteApi(url: string) {
+  return Boolean(API_BASE_URL) || url.startsWith('http://') || url.startsWith('https://')
+}
+
 export async function getJSON<T>(url: string): Promise<T> {
+  if (!shouldUseRemoteApi(url)) {
+    const fallback = demoGet<T>(url)
+    if (fallback !== undefined) return fallback
+  }
+
   try {
     const response = await fetch(buildApiUrl(url))
     return await parseJSON<T>(response, url)
@@ -141,6 +150,11 @@ export async function getJSON<T>(url: string): Promise<T> {
 }
 
 export async function postJSON<T, TBody = unknown>(url: string, body: TBody): Promise<T> {
+  if (!shouldUseRemoteApi(url)) {
+    const fallback = demoPost<T, TBody>(url, body)
+    if (fallback !== undefined) return fallback
+  }
+
   try {
     const response = await fetch(buildApiUrl(url), {
       method: 'POST',
